@@ -21,14 +21,14 @@ func GetNodes(w http.ResponseWriter, r *http.Request) {
 		log.Println(r.RemoteAddr, "added")
 	}()
 	if nodeNum == 0 {
-		GoTools.RespondByErr(w, 801, "no nodes avaliable", "high")
+		GoTools.RespondByErr(w, 801, "no nodes avaliable", "low")
 		return
 	}
 	result := make([]string, nodeNum)
 	for i := 0; i < nodeNum; i++ {
 		GoTools.DBGet("/main", "node"+fmt.Sprint(i), &result[i])
 		if result[i] == r.RemoteAddr {
-			GoTools.RespondByErr(w, 801, "already in the list", "high")
+			GoTools.RespondByErr(w, 801, "already in the list", "low")
 		}
 	}
 	GoTools.RespondByJSON(w, 200, result)
